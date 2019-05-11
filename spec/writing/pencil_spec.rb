@@ -4,15 +4,15 @@ RSpec.describe Writing::Pencil do
   describe '#new' do
     context 'no args' do
       it { is_expected.to have_attributes(:length => 10) }
-      it { is_expected.to have_attributes(:durability => 1000) }
+      it { is_expected.to have_attributes(:point_durability => 1000) }
       it { is_expected.to have_attributes(:eraser_durability => 1000) }
     end
 
     context 'with args' do
-      subject { described_class.new eraser_durability: 696, length: 5, durability: 22 }
+      subject { described_class.new eraser_durability: 696, length: 5, point_durability: 22 }
       it { is_expected.to have_attributes(:eraser_durability => 696) }
       it { is_expected.to have_attributes(:length => 5) }
-      it { is_expected.to have_attributes(:durability => 22) }
+      it { is_expected.to have_attributes(:point_durability => 22) }
     end
   end
 
@@ -37,7 +37,7 @@ RSpec.describe Writing::Pencil do
     end
 
     context "pencil just degraded" do
-      let(:pencil) { described_class.new durability: 3 }
+      let(:pencil) { described_class.new point_durability: 3 }
       let(:arguments) { ["", "hello"] }
       it "writes blank spaces once pencil degrades" do
         is_expected.to eq "hel  "
@@ -45,7 +45,7 @@ RSpec.describe Writing::Pencil do
     end
 
     context "pencil already fully degraded" do
-      let(:pencil) { described_class.new durability: -2 }
+      let(:pencil) { described_class.new point_durability: -2 }
       let(:arguments) { ["", "hello"] }
       it "writes all blank spaces" do
         is_expected.to eq "     "
@@ -53,9 +53,9 @@ RSpec.describe Writing::Pencil do
     end
   end
 
-  describe "durability" do
+  describe "point_durability" do
     let(:pencil) {described_class.new}
-    subject { pencil.durability }
+    subject { pencil.point_durability }
 
     it "degrades after writing" do
       pencil.write("", "hello")

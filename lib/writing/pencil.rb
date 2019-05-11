@@ -2,13 +2,13 @@ module Writing
   class Pencil
     attr_reader(
       :length,
-      :durability,
+      :point_durability,
       :eraser_durability
     )
 
-    def initialize length: 10, durability: 1000, eraser_durability: 1000
+    def initialize length: 10, point_durability: 1000, eraser_durability: 1000
       @length = length
-      @durability = durability
+      @point_durability = point_durability
       @eraser_durability = eraser_durability
     end
 
@@ -19,14 +19,14 @@ module Writing
         else
           paper << c
         end
-        @durability -= 1
+        @point_durability -= 1
       }
 
       paper
     end
 
     def dull?
-      durability < 1
+      point_durability < 1
     end
   end
 end
