@@ -17,26 +17,32 @@ RSpec.describe Writing::Pencil do
   end
 
   describe "#write" do
+    let(:pencil) {described_class.new}
+    subject { pencil.write(*arguments)}
+
     context "new sheet of paper" do
+      let(:arguments) { ["", "Hello World"] }
+
       it "appends text to empty paper" do
-        paper = ""
-        paper = subject.write(paper, "Hello World")
-        expect(paper).to eq "Hello World"
+        is_expected.to eq "Hello World"
       end
     end
 
     context "used sheet of paper" do
-      it "appends text to existing text" do
-        paper = "I Am the "
-        paper = subject.write(paper, "Walrus")
-        expect(paper).to eq "I Am the Walrus"
+      let(:arguments) { ["I Am The", " Walrus"] }
+
+      it "appends to existing text" do
+        is_expected.to eq "I Am The Walrus"
       end
     end
 
-    it "degrades after writing" do
-      paper = ""
-      paper = subject.write(paper, "hello")
-      expect(subject.durability).to be(995)
+    describe "durability" do
+      subject { pencil.durability }
+
+      it "degrades after writing" do
+        pencil.write("", "hello")
+        is_expected.to eq 995
+      end
     end
   end
 end
