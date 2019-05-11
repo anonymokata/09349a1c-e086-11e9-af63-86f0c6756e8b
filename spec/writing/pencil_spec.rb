@@ -2,15 +2,17 @@ require 'writing/pencil'
 
 RSpec.describe Writing::Pencil do
   describe '#new' do
-    it { is_expected.to have_attributes(:length => 10) }
-    it { is_expected.to have_attributes(:durability => 1000) }
-    it { is_expected.to have_attributes(:eraser_durability => 1000) }
+    context 'no args' do
+      it { is_expected.to have_attributes(:length => 10) }
+      it { is_expected.to have_attributes(:durability => 1000) }
+      it { is_expected.to have_attributes(:eraser_durability => 1000) }
+    end
 
-    it "can be instantiated with args" do
-    pencil = described_class.new eraser_durability: 696
-    expect(pencil.eraser_durability).to eq(696)
-    expect(pencil.length).to eq(10)
-    expect(pencil.durability).to eq(1000)
+    context 'with args' do
+      subject { described_class.new eraser_durability: 696, length: 5, durability: 22 }
+      it { is_expected.to have_attributes(:eraser_durability => 696) }
+      it { is_expected.to have_attributes(:length => 5) }
+      it { is_expected.to have_attributes(:durability => 22) }
     end
   end
 
