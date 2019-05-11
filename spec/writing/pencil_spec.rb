@@ -37,10 +37,18 @@ RSpec.describe Writing::Pencil do
     end
 
     context "pencil just degraded" do
-      let(:pencil) {described_class.new durability: 3}
-      let(:arguments) { ["", "hello"]}
+      let(:pencil) { described_class.new durability: 3 }
+      let(:arguments) { ["", "hello"] }
       it "writes blank spaces once pencil degrades" do
         is_expected.to eq "hel  "
+      end
+    end
+
+    context "pencil already fully degraded" do
+      let(:pencil) { described_class.new durability: -2 }
+      let(:arguments) { ["", "hello"] }
+      it "writes all blank spaces" do
+        is_expected.to eq "     "
       end
     end
   end

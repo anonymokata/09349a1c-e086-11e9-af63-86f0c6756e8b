@@ -13,14 +13,20 @@ module Writing
     end
 
     def write paper, text
-      @durability -= text.length
+      text.each_char{ |c|
+        if dull?
+          paper << ' '
+        else
+          paper << c
+        end
+        @durability -= 1
+      }
 
-      if @durability < 0 then
-        text = text.slice(0, text.length - @durability.abs)
-        text = text.ljust(text.length + @durability.abs)
-      end
+      paper
+    end
 
-      paper << text
+    def dull?
+      durability < 1
     end
   end
 end
