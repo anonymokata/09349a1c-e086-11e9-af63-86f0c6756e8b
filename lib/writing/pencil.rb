@@ -1,6 +1,6 @@
 module Writing
   class Pencil
-    attr_accessor(
+    attr_reader(
       :length,
       :durability,
       :eraser_durability
