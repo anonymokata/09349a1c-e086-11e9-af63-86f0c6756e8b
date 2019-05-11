@@ -17,7 +17,7 @@ RSpec.describe Writing::Pencil do
   end
 
   describe "#write" do
-    let(:pencil) {described_class.new}
+    let(:pencil) { described_class.new }
     subject { pencil.write(*arguments) }
 
     context "new sheet of paper" do
@@ -29,32 +29,32 @@ RSpec.describe Writing::Pencil do
     end
 
     context "used sheet of paper" do
-      let(:arguments) { ["I Am The", " Walrus"] }
+      let(:arguments) { ["She sells sea shells", " down by the sea shore"] }
 
       it "appends to existing text" do
-        is_expected.to eq "I Am The Walrus"
+        is_expected.to eq "She sells sea shells down by the sea shore"
       end
     end
 
     context "pencil just degraded" do
       let(:pencil) { described_class.new point_durability: 3 }
       let(:arguments) { ["", "hello"] }
-      it "writes blank spaces once pencil degrades" do
+      it "begins writing blank spaces once pencil degrades" do
         is_expected.to eq "hel  "
       end
     end
 
     context "pencil already fully degraded" do
-      let(:pencil) { described_class.new point_durability: -2 }
+      let(:pencil) { described_class.new point_durability: -100 }
       let(:arguments) { ["", "hello"] }
-      it "writes all blank spaces" do
+      it "writes only blank spaces" do
         is_expected.to eq "     "
       end
     end
   end
 
   describe "point_durability" do
-    let(:pencil) {described_class.new}
+    let(:pencil) { described_class.new }
     subject { pencil.point_durability }
 
     it "degrades after writing" do
