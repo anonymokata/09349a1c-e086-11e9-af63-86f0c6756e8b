@@ -1,1 +1,1 @@
-init
+In regards to Point Degradation, cases outside uppercase, lowercase, and whitespace (e.g. special characters, etc.) were not mentioned in the prompt, so I'm assuming degrading by a point value of one for these cases is okay.
