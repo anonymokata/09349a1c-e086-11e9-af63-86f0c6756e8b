@@ -8,6 +8,7 @@ module Writing
 
     def initialize length: 10, point_durability: 1000, eraser_durability: 1000
       @length = length
+      @original_durability = point_durability
       @point_durability = point_durability
       @eraser_durability = eraser_durability
     end
@@ -23,6 +24,14 @@ module Writing
       }
 
       paper
+    end
+
+    def sharpen
+      if @length > 0
+        @point_durability = @original_durability
+        @length -= 1
+      end
+      @length
     end
 
     def dull?
