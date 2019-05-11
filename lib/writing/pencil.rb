@@ -11,5 +11,9 @@ module Writing
       @durability = durability
       @eraser_durability = eraser_durability
     end
+
+    def write paper, text
+      paper.concat(text)
+    end
   end
 end
