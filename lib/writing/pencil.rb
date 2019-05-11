@@ -15,6 +15,11 @@ module Writing
     def write paper, text
       @durability -= text.length
 
+      if @durability < 0 then
+        text = text.slice(0, text.length - @durability.abs)
+        text = text.ljust(text.length + @durability.abs)
+      end
+
       paper << text
     end
   end

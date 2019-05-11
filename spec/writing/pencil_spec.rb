@@ -18,7 +18,7 @@ RSpec.describe Writing::Pencil do
 
   describe "#write" do
     let(:pencil) {described_class.new}
-    subject { pencil.write(*arguments)}
+    subject { pencil.write(*arguments) }
 
     context "new sheet of paper" do
       let(:arguments) { ["", "Hello World"] }
@@ -36,13 +36,22 @@ RSpec.describe Writing::Pencil do
       end
     end
 
-    describe "durability" do
-      subject { pencil.durability }
-
-      it "degrades after writing" do
-        pencil.write("", "hello")
-        is_expected.to eq 995
+    context "pencil just degraded" do
+      let(:pencil) {described_class.new durability: 3}
+      let(:arguments) { ["", "hello"]}
+      it "writes blank spaces once pencil degrades" do
+        is_expected.to eq "hel  "
       end
+    end
+  end
+
+  describe "durability" do
+    let(:pencil) {described_class.new}
+    subject { pencil.durability }
+
+    it "degrades after writing" do
+      pencil.write("", "hello")
+      is_expected.to eq 995
     end
   end
 end
