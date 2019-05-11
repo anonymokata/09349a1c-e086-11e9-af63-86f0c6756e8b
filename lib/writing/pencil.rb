@@ -13,7 +13,7 @@ module Writing
     end
 
     def write paper, text
-      paper.concat(text)
+      paper << text 
     end
   end
 end
