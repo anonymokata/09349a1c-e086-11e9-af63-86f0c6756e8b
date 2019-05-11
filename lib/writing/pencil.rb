@@ -27,7 +27,7 @@ module Writing
     end
 
     def sharpen
-      if @length > 0
+      if not used_up?
         @point_durability = @original_durability
         @length -= 1
       end
@@ -36,6 +36,10 @@ module Writing
 
     def dull?
       point_durability < 1
+    end
+
+    def used_up?
+      @length == 0
     end
 
     private
