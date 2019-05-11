@@ -17,18 +17,16 @@ RSpec.describe Writing::Pencil do
   describe "#write" do
     context "new sheet of paper" do
       it "appends text to empty paper" do
-        pencil = described_class.new
         paper = ""
-        paper = pencil.write(paper, "Hello World")
+        paper = subject.write(paper, "Hello World")
         expect(paper).to eq "Hello World"
       end
     end
 
     context "used sheet of paper" do
       it "appends text to existing text" do
-        pencil = described_class.new
         paper = "I Am the "
-        paper = pencil.write(paper, "Walrus")
+        paper = subject.write(paper, "Walrus")
         expect(paper).to eq "I Am the Walrus"
       end
     end
