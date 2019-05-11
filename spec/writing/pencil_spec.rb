@@ -7,10 +7,10 @@ RSpec.describe Writing::Pencil do
     it { is_expected.to have_attributes(:eraser_durability => 1000) }
 
     it "can be instantiated with args" do
-     pencil = described_class.new eraser_durability: 696
-     expect(pencil.eraser_durability).to eq(696)
-     expect(pencil.length).to eq(10)
-     expect(pencil.durability).to eq(1000)
+    pencil = described_class.new eraser_durability: 696
+    expect(pencil.eraser_durability).to eq(696)
+    expect(pencil.length).to eq(10)
+    expect(pencil.durability).to eq(1000)
     end
   end
 
@@ -29,6 +29,12 @@ RSpec.describe Writing::Pencil do
         paper = subject.write(paper, "Walrus")
         expect(paper).to eq "I Am the Walrus"
       end
+    end
+
+    it "degrades after writing" do
+      paper = ""
+      paper = subject.write(paper, "hello")
+      expect(subject.durability).to be(995)
     end
   end
 end

@@ -13,7 +13,9 @@ module Writing
     end
 
     def write paper, text
-      paper << text 
+      @durability -= text.length
+
+      paper << text
     end
   end
 end
