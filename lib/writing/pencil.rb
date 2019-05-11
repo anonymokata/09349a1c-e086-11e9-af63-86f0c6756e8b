@@ -19,7 +19,7 @@ module Writing
         else
           paper << c
         end
-        @point_durability -= 1
+        degrade c
       }
 
       paper
@@ -28,5 +28,16 @@ module Writing
     def dull?
       point_durability < 1
     end
+
+    private
+      def degrade c
+        if c.match?(/[A-Z]/)
+          @point_durability -= 2
+        elsif c.match?(/\s/)
+          @point_durability -= 0
+        else
+          @point_durability -= 1
+        end
+      end
   end
 end

@@ -57,9 +57,25 @@ RSpec.describe Writing::Pencil do
     let(:pencil) { described_class.new }
     subject { pencil.point_durability }
 
-    it "degrades after writing" do
-      pencil.write("", "hello")
-      is_expected.to eq 995
+    context "lowercase letters" do
+      it "degrades by point value of one for each char" do
+        pencil.write("", "hello")
+        is_expected.to eq 995
+      end
+    end
+
+    context "UPPERCASE letters" do
+      it "degrades by point value of two for each char" do
+        pencil.write("", "HELLO")
+        is_expected.to eq 990
+      end
+    end
+
+    context "lowercase & UPPERCASE letters" do
+      it "degrades by 0 for whitespace, 1 for lower case/special, 2 for UPPER case" do
+        pencil.write("", "I AM YELLING and now i'm not.")
+        is_expected.to eq 967
+      end
     end
   end
 end
