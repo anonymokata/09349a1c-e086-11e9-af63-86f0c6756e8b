@@ -15,7 +15,7 @@ module Writing
 
     def write paper, text
       text.each_char{ |c|
-        if dull?
+        if dull_point?
           paper << ' '
         else
           paper << c
@@ -26,16 +26,28 @@ module Writing
       paper
     end
 
+    def erase paper, text
+      startInd = paper.rindex(text) # handle if null
+      return unless not startInd.nil?
+      endInd = startInd + text.length-1
+      (startInd..endInd).reverse_each { |i|
+        paper[i] = " "
+      }
+    end
+
     def sharpen
       if not used_up?
         @point_durability = @original_durability
         @length -= 1
       end
-      @length
     end
 
-    def dull?
-      point_durability < 1
+    def dull_point?
+      @point_durability < 1
+    end
+
+    def dull_eraser?
+      @eraser_durability < 1
     end
 
     def used_up?

@@ -109,4 +109,18 @@ RSpec.describe Writing::Pencil do
       end
     end
   end
+
+  describe "#erase" do
+    it "erases the last occurence of text" do
+      paper = "lorem ipsum dolor lorem ipsum dolor sit amet"
+      subject.erase(paper, "lorem")
+      expect(paper).to eq "lorem ipsum dolor       ipsum dolor sit amet"
+    end
+
+    it "erases nothing if searched text isn't found" do
+      paper = "Lorem ipsum dolor lorem ipsum dolor sit amet"
+      subject.erase(paper, "chuck")
+      expect(paper).to eq "Lorem ipsum dolor lorem ipsum dolor sit amet"
+    end
+  end
 end
