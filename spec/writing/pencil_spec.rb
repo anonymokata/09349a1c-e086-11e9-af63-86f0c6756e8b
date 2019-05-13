@@ -80,7 +80,6 @@ RSpec.describe Writing::Pencil do
   end
 
   describe "#sharpen" do
-
     before(:example) do
       subject.write("", "hello")
       subject.sharpen
@@ -111,16 +110,21 @@ RSpec.describe Writing::Pencil do
   end
 
   describe "#erase" do
+    let(:paper) { "lorem ipsum dolor lorem ipsum dolor sit amet" }
     it "erases the last occurence of text" do
-      paper = "lorem ipsum dolor lorem ipsum dolor sit amet"
+      #paper = "lorem ipsum dolor lorem ipsum dolor sit amet"
       subject.erase(paper, "lorem")
       expect(paper).to eq "lorem ipsum dolor       ipsum dolor sit amet"
     end
 
     it "erases nothing if searched text isn't found" do
-      paper = "Lorem ipsum dolor lorem ipsum dolor sit amet"
       subject.erase(paper, "chuck")
-      expect(paper).to eq "Lorem ipsum dolor lorem ipsum dolor sit amet"
+      expect(paper).to eq "lorem ipsum dolor lorem ipsum dolor sit amet"
+    end
+
+    it "erases text even when the text isn't just a singular word" do
+      subject.erase(paper, "um")
+      expect(paper).to eq "lorem ipsum dolor lorem ips   dolor sit amet"
     end
   end
 end
