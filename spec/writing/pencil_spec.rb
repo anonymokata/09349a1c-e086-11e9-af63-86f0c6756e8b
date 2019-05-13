@@ -110,19 +110,35 @@ RSpec.describe Writing::Pencil do
 
   describe "#erase" do
     let(:paper) { "lorem ipsum dolor lorem ipsum dolor sit amet" }
-    it "erases the last occurence of text" do
-      subject.erase(paper, "lorem")
-      expect(paper).to eq "lorem ipsum dolor       ipsum dolor sit amet"
+
+    context "searched text is found" do
+      context "a full word" do
+        it "erases the last occurence of text" do
+          subject.erase(paper, "lorem")
+          expect(paper).to eq "lorem ipsum dolor       ipsum dolor sit amet"
+        end
+      end
+
+      context "partial word" do
+        it "erases the last occurence of text" do
+          subject.erase(paper, "um")
+          expect(paper).to eq "lorem ipsum dolor lorem ips   dolor sit amet"
+        end
+      end
+
+      context "contains whitespace" do
+        it "erases the last occurence of text" do
+          subject.erase(paper, "dolor sit")
+          expect(paper).to eq "lorem ipsum dolor lorem ipsum           amet"
+        end
+      end       
     end
 
-    it "erases nothing if searched text isn't found" do
-      subject.erase(paper, "chuck")
-      expect(paper).to eq "lorem ipsum dolor lorem ipsum dolor sit amet"
-    end
-
-    it "erases text even when the text isn't just a singular word" do
-      subject.erase(paper, "um")
-      expect(paper).to eq "lorem ipsum dolor lorem ips   dolor sit amet"
+    context "searched text isn't found" do
+      it "erases nothing" do
+        subject.erase(paper, "chuck")
+        expect(paper).to eq "lorem ipsum dolor lorem ipsum dolor sit amet"
+      end
     end
 
     context "dull eraser" do
@@ -147,6 +163,11 @@ RSpec.describe Writing::Pencil do
       it "degrades eraser by 1 for each char erased" do
         subject.erase(paper, "dolo")
         expect(subject.eraser_durability).to eq(996)
+      end
+
+      it "degrades eraser by 0 when erasing whitespace" do
+        subject.erase(paper, "ipsum dolor")
+        expect(subject.eraser_durability).to eq(990)
       end
     end
   end
