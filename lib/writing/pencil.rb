@@ -13,21 +13,21 @@ module Writing
       @eraser_durability = eraser_durability
     end
 
-    def write paper, text
+    def write paper, text, index: paper.length
       text.each_char{ |c|
         if dull_point?
           paper << ' '
         else
-          paper << c
+          write_char(paper, c, index)
         end
+        index += 1
         degrade_point c
       }
-
       paper
     end
 
     def erase paper, text
-      startInd = paper.rindex(text) # index of 1st char of 'text'
+      startInd = paper.rindex(text) # index of 1st char of text
       return unless not startInd.nil?
       endInd = startInd + text.length-1
 
@@ -37,6 +37,14 @@ module Writing
         paper[i] = " " if not dull_eraser?
         degrade_eraser char
       }
+      startInd
+    end
+
+    def edit paper, text, newText
+      if (not dull_point?) && (not dull_eraser?)
+        startInd = erase(paper, text)
+        write(paper, newText, index: startInd)
+      end
     end
 
     def sharpen
@@ -59,6 +67,17 @@ module Writing
     end
 
     private
+      def write_char paper, c, index
+        # collisions occur when:
+        #   we're not appending letters to the page &&
+        #   and the current character is not whitespace
+        if (index != paper.length) && (paper[index] != ' ')
+          paper[index] = '@'
+        else
+          paper[index] = c
+        end
+      end
+
       def degrade_point c
         if c.match?(/[A-Z]/)
           @point_durability -= 2

@@ -2,6 +2,7 @@ require 'writing/pencil'
 
 RSpec.describe Writing::Pencil do
   let(:pencil) { described_class.new }
+  let(:paper) { "lorem ipsum dolor lorem ipsum dolor sit amet" }
 
   describe '#new' do
     context 'no args' do
@@ -19,6 +20,7 @@ RSpec.describe Writing::Pencil do
   end
 
   describe "#write" do
+    #TODO write tests for :index option
     subject { pencil.write(*arguments) }
 
     context "new sheet of paper" do
@@ -109,8 +111,6 @@ RSpec.describe Writing::Pencil do
   end
 
   describe "#erase" do
-    let(:paper) { "lorem ipsum dolor lorem ipsum dolor sit amet" }
-
     context "searched text is found" do
       context "a full word" do
         it "erases the last occurence of text" do
@@ -168,6 +168,40 @@ RSpec.describe Writing::Pencil do
       it "degrades eraser by 0 when erasing whitespace" do
         subject.erase(paper, "ipsum dolor")
         expect(subject.eraser_durability).to eq(990)
+      end
+    end
+  end
+
+  describe "#edit" do
+    it "replaces last instance of old Text with new Text" do
+      subject.edit(paper, "ipsum", "apple")
+      expect(paper).to eq "lorem ipsum dolor lorem apple dolor sit amet"
+    end
+
+    context "dull point, dull eraser" do
+      subject { described_class.new point_durability: 0, eraser_durability: 0}
+      it "makes no changes to the text" do
+        subject.edit(paper, "ipsum", "apple")
+        expect(paper).to eq "lorem ipsum dolor lorem ipsum dolor sit amet"
+      end
+    end
+
+    it "replaces collisions with @" do
+      subject.edit(paper, "ipsum", "crackerjacks")
+      expect(paper).to eq "lorem ipsum dolor lorem cracke@@@@@ssit amet"    
+    end
+
+    context "collision on last index" do
+      it "replaces collision with @" do
+        subject.edit(paper, "ame", "four")
+        expect(paper).to eq "lorem ipsum dolor lorem ipsum dolor sit fou@"    
+      end
+    end
+
+    context "adding characters to the end of the string" do
+      it "replaces existing word and successfully appends extra letters" do
+        subject.edit(paper, "amet", "waffles")
+        expect(paper).to eq "lorem ipsum dolor lorem ipsum dolor sit waffles"    
       end
     end
   end
