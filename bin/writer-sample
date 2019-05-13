@@ -6,8 +6,8 @@ $LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
 
 require "writing/pencil"
 
-# What a good day to write. Let me just grab a pencil and paper
-# and we'll get started writing
+# Writer: "What a good day to write. Let me just grab a pencil and paper
+# and we'll get started writing"
 pencil = Writing::Pencil.new(point_durability: 100, eraser_durability: 100, length: 1)
 pg_one = ""
 
@@ -16,12 +16,25 @@ pencil.write(pg_one, "Do you like green eggs")
 # *stop writing to scratch leg*
 pencil.write(pg_one, " eggs and spam? I do not like them, Sam-I-am.")
 
-# Oops, I wrote eggs twice. Let's erase one of the duplicates.
+# Oops! I wrote eggs twice. Let's erase one of the duplicates.
 pencil.erase(pg_one, "eggs")
 
 # Oops! I wrote spam instead of ham!
 pencil.edit(pg_one, "spam", "ham")
 
-pencil.write(pg_one, " I do not like green eggs and ham. Would you like them here or there?")
+pencil.write(pg_one, " I do not like green eggs and ham. Would you like")
+# Oops! My pencil is dull. Better sharpen it.
+pencil.sharpen()
 
-STDOUT << pg_one
+pencil.write(pg_one, "e them here or there?")
+puts pg_one
+
+# Seems like a good place to stop for page one of my book. Let's start page two.
+pg_two = ""
+
+pencil.write(pg_two, "I would not like them here or there. I would not like them anywhere. ")
+pencil.write(pg_two, "One fish, Two fish, Red fish, Blue fish. Black fish, Blue fish, Old fish, New fish.")
+# Oops! That's the wrong book. I should erase that.
+pencil.erase(pg_two, "One fish, Two fish, Red fish, Blue fish. Black fish, Blue fish, Old fish, New fish.")
+# Oh no, my eraser is dull and I can't erase my mistake. :(
+puts pg_two
