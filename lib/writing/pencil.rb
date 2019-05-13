@@ -19,28 +19,29 @@ module Writing
           paper << ' '
         else
           write_char(paper, c, index)
+          index += 1
         end
-        index += 1
         degrade_point c
       }
       paper
     end
 
     def erase paper, text
-      startInd = paper.rindex(text) # index of 1st char of text
-      return unless not startInd.nil?
-      endInd = startInd + text.length-1
+      startIndex = paper.rindex(text) # index of 1st char of text
+      return unless not startIndex.nil?
+      endIndex = startIndex + text.length-1
 
       # erase in the opposite order the text was written
-      (startInd..endInd).reverse_each { |i|
+      (startIndex..endIndex).reverse_each { |i|
         char = paper[i]
         paper[i] = " " if not dull_eraser?
         degrade_eraser char
       }
-      startInd
+      startIndex
     end
 
     def edit paper, text, newText
+      # pencil must be fully functional to edit
       if (not dull_point?) && (not dull_eraser?)
         startInd = erase(paper, text)
         write(paper, newText, index: startInd)
@@ -69,7 +70,7 @@ module Writing
     private
       def write_char paper, c, index
         # collisions occur when:
-        #   we're not appending letters to the page &&
+        #   we're not appending letters to the end of the page &&
         #   and the current character is not whitespace
         if (index != paper.length) && (paper[index] != ' ')
           paper[index] = '@'
@@ -79,17 +80,17 @@ module Writing
       end
 
       def degrade_point c
-        if c.match?(/[A-Z]/)
+        if c.match?(/[A-Z]/) # UPPERCASE
           @point_durability -= 2
-        elsif c.match?(/\s/)
+        elsif c.match?(/\s/) # whitespace
           @point_durability -= 0
-        else
+        else # lowercase/special
           @point_durability -= 1
         end
       end
 
       def degrade_eraser c
-        if not c.match?(/\s/)
+        if not c.match?(/\s/) # whitespace
           @eraser_durability -= 1
         end
       end
