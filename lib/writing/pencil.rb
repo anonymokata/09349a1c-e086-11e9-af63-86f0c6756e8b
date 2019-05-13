@@ -15,7 +15,7 @@ module Writing
 
     def write paper, text, index: paper.length
       text.each_char{ |c|
-        if dull_point?
+        if dull? @point_durability
           paper << ' '
         else
           write_char(paper, c, index)
@@ -34,7 +34,7 @@ module Writing
       # erase in the opposite order the text was written
       (startIndex..endIndex).reverse_each { |i|
         char = paper[i]
-        paper[i] = " " if not dull_eraser?
+        paper[i] = " " if not dull? @eraser_durability
         degrade_eraser char
       }
       startIndex
@@ -42,7 +42,7 @@ module Writing
 
     def edit paper, text, newText
       # pencil must be fully functional to edit
-      if (not dull_point?) && (not dull_eraser?)
+      if (not dull? @point_durability) && (not dull? @eraser_durability)
         startInd = erase(paper, text)
         write(paper, newText, index: startInd)
       end
@@ -55,14 +55,10 @@ module Writing
       end
     end
 
-    def dull_point?
-      @point_durability < 1
+    def dull? durability
+      durability < 1
     end
-
-    def dull_eraser?
-      @eraser_durability < 1
-    end
-
+    
     def used_up?
       @length == 0
     end
