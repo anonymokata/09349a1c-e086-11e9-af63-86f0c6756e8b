@@ -1,6 +1,8 @@
 require 'writing/pencil'
 
 RSpec.describe Writing::Pencil do
+  let(:pencil) { described_class.new }
+
   describe '#new' do
     context 'no args' do
       it { is_expected.to have_attributes(:length => 10) }
@@ -17,7 +19,6 @@ RSpec.describe Writing::Pencil do
   end
 
   describe "#write" do
-    let(:pencil) { described_class.new }
     subject { pencil.write(*arguments) }
 
     context "new sheet of paper" do
@@ -54,7 +55,6 @@ RSpec.describe Writing::Pencil do
   end
 
   describe "point_durability" do
-    let(:pencil) { described_class.new }
     subject { pencil.point_durability }
 
     context "lowercase letters" do
@@ -90,7 +90,6 @@ RSpec.describe Writing::Pencil do
         expect(subject.point_durability).to eq 1000
       end
 
-      let(:pencil) { described_class.new }
       it "reduces length of pencil by 1" do
         expect(subject.length).to eq 9
       end
@@ -110,7 +109,6 @@ RSpec.describe Writing::Pencil do
   end
 
   describe "#erase" do
-    let(:pencil) { described_class.new }
     let(:paper) { "lorem ipsum dolor lorem ipsum dolor sit amet" }
     it "erases the last occurence of text" do
       subject.erase(paper, "lorem")
