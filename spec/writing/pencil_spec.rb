@@ -85,7 +85,7 @@ RSpec.describe Writing::Pencil do
       subject.sharpen
     end
 
-    context "@length > 0" do
+    context "pencil is not used up" do
       it "resets point_durability back to original value" do
         expect(subject.point_durability).to eq 1000
       end
@@ -95,7 +95,7 @@ RSpec.describe Writing::Pencil do
       end
     end
 
-    context "@length = 0" do
+    context "pencil is used up" do
       subject { described_class.new length: 0 }
 
       it "does not reset point_durability" do
