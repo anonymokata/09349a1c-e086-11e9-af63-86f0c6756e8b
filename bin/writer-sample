@@ -1,0 +1,27 @@
+#!/user/bin/env ruby
+
+this_dir = File.dirname(__FILE__)
+lib_dir  = File.join(this_dir,  '..', 'lib')
+$LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
+
+require "writing/pencil"
+
+# What a good day to write. Let me just grab a pencil and paper
+# and we'll get started writing
+pencil = Writing::Pencil.new(point_durability: 100, eraser_durability: 100, length: 1)
+pg_one = ""
+
+# Let's get started writing my new book
+pencil.write(pg_one, "Do you like green eggs")
+# *stop writing to scratch leg*
+pencil.write(pg_one, " eggs and spam? I do not like them, Sam-I-am.")
+
+# Oops, I wrote eggs twice. Let's erase one of the duplicates.
+pencil.erase(pg_one, "eggs")
+
+# Oops! I wrote spam instead of ham!
+pencil.edit(pg_one, "spam", "ham")
+
+pencil.write(pg_one, " I do not like green eggs and ham. Would you like them here or there?")
+
+STDOUT << pg_one
