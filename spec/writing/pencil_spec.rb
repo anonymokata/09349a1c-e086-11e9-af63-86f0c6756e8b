@@ -53,7 +53,7 @@ RSpec.describe Writing::Pencil do
       end
     end
 
-    describe "point_durability" do
+    describe "@point_durability" do
       subject { pencil.point_durability }
   
       context "lowercase letters" do
@@ -86,11 +86,11 @@ RSpec.describe Writing::Pencil do
     end
 
     context "pencil is not used up" do
-      it "resets point_durability back to original value" do
+      it "resets @point_durability back to original value" do
         expect(subject.point_durability).to eq 1000
       end
 
-      it "reduces length of pencil by 1" do
+      it "reduces @length of pencil by 1" do
         expect(subject.length).to eq 9
       end
     end
@@ -98,11 +98,11 @@ RSpec.describe Writing::Pencil do
     context "pencil is used up" do
       subject { described_class.new length: 0 }
 
-      it "does not reset point_durability" do
+      it "does not reset @point_durability" do
         expect(subject.point_durability).to eq 995
       end
 
-      it "does not reduce length of pencil" do
+      it "does not reduce @length of pencil" do
         expect(subject.length).to eq 0
       end
     end
