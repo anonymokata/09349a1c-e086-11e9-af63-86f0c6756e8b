@@ -125,11 +125,6 @@ RSpec.describe Writing::Pencil do
       expect(paper).to eq "lorem ipsum dolor lorem ips   dolor sit amet"
     end
 
-    it "degrades eraser by 1 for each char erased" do
-      subject.erase(paper, "dolo")
-      expect(subject.eraser_durability).to eq(996)
-    end
-
     context "dull eraser" do
       context "eraser becomes dull while erasing" do
         let(:pencil) { described_class.new eraser_durability: 3 }
@@ -145,6 +140,13 @@ RSpec.describe Writing::Pencil do
           pencil.erase(paper, "dolor")
           expect(paper).to eq "lorem ipsum dolor lorem ipsum dolor sit amet"
         end
+      end
+    end
+
+    describe "@eraser_durability" do
+      it "degrades eraser by 1 for each char erased" do
+        subject.erase(paper, "dolo")
+        expect(subject.eraser_durability).to eq(996)
       end
     end
   end
