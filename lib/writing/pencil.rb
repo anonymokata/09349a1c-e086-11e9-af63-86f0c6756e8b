@@ -20,18 +20,22 @@ module Writing
         else
           paper << c
         end
-        degrade c
+        degrade_point c
       }
 
       paper
     end
 
     def erase paper, text
-      startInd = paper.rindex(text) # handle if null
+      startInd = paper.rindex(text) # index of 1st char of 'text'
       return unless not startInd.nil?
       endInd = startInd + text.length-1
+
+      # erase in the opposite order the text was written
       (startInd..endInd).reverse_each { |i|
-        paper[i] = " "
+        char = paper[i]
+        paper[i] = " " if not dull_eraser?
+        degrade_eraser char
       }
     end
 
@@ -55,13 +59,19 @@ module Writing
     end
 
     private
-      def degrade c
+      def degrade_point c
         if c.match?(/[A-Z]/)
           @point_durability -= 2
         elsif c.match?(/\s/)
           @point_durability -= 0
         else
           @point_durability -= 1
+        end
+      end
+
+      def degrade_eraser c
+        if not c.match?(/\s/)
+          @eraser_durability -= 1
         end
       end
   end

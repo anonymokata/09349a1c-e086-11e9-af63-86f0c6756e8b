@@ -110,9 +110,9 @@ RSpec.describe Writing::Pencil do
   end
 
   describe "#erase" do
+    let(:pencil) { described_class.new }
     let(:paper) { "lorem ipsum dolor lorem ipsum dolor sit amet" }
     it "erases the last occurence of text" do
-      #paper = "lorem ipsum dolor lorem ipsum dolor sit amet"
       subject.erase(paper, "lorem")
       expect(paper).to eq "lorem ipsum dolor       ipsum dolor sit amet"
     end
@@ -125,6 +125,29 @@ RSpec.describe Writing::Pencil do
     it "erases text even when the text isn't just a singular word" do
       subject.erase(paper, "um")
       expect(paper).to eq "lorem ipsum dolor lorem ips   dolor sit amet"
+    end
+
+    it "degrades eraser by 1 for each char erased" do
+      subject.erase(paper, "dolo")
+      expect(subject.eraser_durability).to eq(996)
+    end
+
+    context "dull eraser" do
+      context "eraser becomes dull while erasing" do
+        let(:pencil) { described_class.new eraser_durability: 3 }
+        it "erases text, in reverse order, until eraser becomes dull" do
+          pencil.erase(paper, "dolor")
+          expect(paper).to eq "lorem ipsum dolor lorem ipsum do    sit amet"
+        end
+      end
+
+      context "eraser already dull when erasing starts" do
+        let(:pencil) { described_class.new eraser_durability: 0 }
+        it "does not erase any text" do
+          pencil.erase(paper, "dolor")
+          expect(paper).to eq "lorem ipsum dolor lorem ipsum dolor sit amet"
+        end
+      end
     end
   end
 end
