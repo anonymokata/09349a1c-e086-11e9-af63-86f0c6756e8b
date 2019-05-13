@@ -52,29 +52,29 @@ RSpec.describe Writing::Pencil do
         is_expected.to eq "     "
       end
     end
-  end
 
-  describe "point_durability" do
-    subject { pencil.point_durability }
-
-    context "lowercase letters" do
-      it "degrades by point value of one for each char" do
-        pencil.write("", "hello")
-        is_expected.to eq 995
+    describe "point_durability" do
+      subject { pencil.point_durability }
+  
+      context "lowercase letters" do
+        it "degrades by point value of one for each char" do
+          pencil.write("", "hello")
+          is_expected.to eq 995
+        end
       end
-    end
-
-    context "UPPERCASE letters" do
-      it "degrades by point value of two for each char" do
-        pencil.write("", "HELLO")
-        is_expected.to eq 990
+  
+      context "UPPERCASE letters" do
+        it "degrades by point value of two for each char" do
+          pencil.write("", "HELLO")
+          is_expected.to eq 990
+        end
       end
-    end
-
-    context "lowercase & UPPERCASE letters" do
-      it "degrades by 0 for whitespace, 1 for lower case/special, 2 for UPPER case" do
-        pencil.write("", "I AM YELLING and now i'm not.")
-        is_expected.to eq 967
+  
+      context "lowercase & UPPERCASE letters" do
+        it "degrades by 0 for whitespace, 1 for lower case/special, 2 for UPPER case" do
+          pencil.write("", "I AM YELLING and now i'm not.")
+          is_expected.to eq 967
+        end
       end
     end
   end
