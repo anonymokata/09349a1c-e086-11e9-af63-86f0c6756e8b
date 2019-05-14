@@ -14,10 +14,10 @@ gem install bundler
 # --
 bundle install
 
-# Run Sample Program
+## Run Sample Program
 ruby bin/writer-sample
 
-# Run Tests
+## Run Tests
 rspec
 
 
