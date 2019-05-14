@@ -49,7 +49,7 @@ module Writing
     end
 
     def sharpen
-      if not used_up?
+      if !can_be_sharpened?
         @point_durability = @original_durability
         @length -= 1
       end
@@ -59,7 +59,7 @@ module Writing
       durability < 1
     end
     
-    def used_up?
+    def can_be_sharpened?
       @length == 0
     end
 
